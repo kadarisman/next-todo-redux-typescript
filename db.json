@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "task": "Latihan Gym",
+      "status": "Progress",
+      "id": 1
+    },
+    {
+      "task": "Belajar",
+      "status": "Progress",
+      "id": 3
+    },
+    {
+      "task": "test Edit",
+      "status": "Finish",
+      "id": 4
+    },
+    {
+      "task": "gg edit",
+      "status": "Finish",
+      "id": 5
+    }
+  ]
+}
