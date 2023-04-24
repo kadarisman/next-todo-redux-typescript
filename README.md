@@ -7,7 +7,7 @@ this is TypeScript version, if you want javaScript version [visit this](https://
 ## Getting Started
 
 ```bash
-git clone https://github.com/kadarisman/next-todo-redux.git
+git clone https://github.com/kadarisman/next-todo-redux-typescript
 npm install -g json-server
 json-server --w db.json -p 5000
 npm run dev
