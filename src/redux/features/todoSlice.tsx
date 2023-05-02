@@ -4,29 +4,46 @@ import axios from 'axios';
 interface Todo {
     id: number;
     task: string;
-    status: string;
+    status: number;
+    created_at: string;
+    updated_at: string;
 }
 
 interface TodoState extends ReturnType<typeof todoEntity.getInitialState> {}
 
 export const getTodos = createAsyncThunk<Todo[]>("todos/getTodos", async()=> {
-    const response = await axios.get<Todo[]>("http://localhost:5000/todos");
+    const response = await axios.get<Todo[]>("https://express-todo-typescript.vercel.app/todos");
     return response.data;
 });
 
 export const createTodo = createAsyncThunk<Todo, Partial<Todo>>("todos/createTodo", async ({ task, status }: Partial<Todo>) => {
-    const response = await axios.post<Todo>("http://localhost:5000/todos", { task, status });
+    const config = {
+        headers: {
+          "x-secret-key": "k4d4r15m4n",
+        },
+      };
+    const response = await axios.post<Todo>("https://express-todo-typescript.vercel.app/todos", { task, status }, config);
     return response.data;
   });
   
 
-export const updateTodo = createAsyncThunk<Todo, { id: number, task: string, status: string }>("todos/updateTodo", async ({ id, task, status }) => {
-    const response = await axios.patch<Todo>(`http://localhost:5000/todos/${id}`, {task, status });
+export const updateTodo = createAsyncThunk<Todo, { id: number, task: string, status: number }>("todos/updateTodo", async ({ id, task, status }) => {
+    const config = {
+        headers: {
+          "x-secret-key": "k4d4r15m4n",
+        },
+      };
+    const response = await axios.put<Todo>(`https://express-todo-typescript.vercel.app/todos/${id}`, {task, status }, config);
     return response.data;
 });
 
 export const deleteTodo = createAsyncThunk<void, number>("todos/deleteTodo", async (id: number) => {
-    await axios.delete(`http://localhost:5000/todos/${id}`);
+    const config = {
+        headers: {
+          "x-secret-key": "k4d4r15m4n",
+        },
+      };
+    await axios.delete(`https://express-todo-typescript.vercel.app/todos/${id}`, config);
 });
 
 const todoEntity = createEntityAdapter<Todo>({

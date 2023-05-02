@@ -6,8 +6,8 @@ interface ModalAddProps {
   handleSave: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   task: string;
   setTask: React.Dispatch<React.SetStateAction<string>>;
-  status: string;
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
+  status: number;
+  setStatus: React.Dispatch<React.SetStateAction<number>>;
   alertAdd:boolean;
 }
 const ModalAddTodo: React.FC<ModalAddProps> = (props : ModalAddProps) => {
@@ -54,13 +54,13 @@ const ModalAddTodo: React.FC<ModalAddProps> = (props : ModalAddProps) => {
             <select
               id="newTodoPriority"
               value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              onChange={(e) => setStatus(parseInt(e.target.value))}
               className="w-full p-2 border rounded"
             >
               <option value="">Select</option>
-              <option value="Todo">Todo</option>
-              <option value="Progress">Progress</option>
-              <option value="Finish">Finish</option>
+              <option value="1">Todo</option>
+              <option value="2">Progress</option>
+              <option value="3">Finish</option>
             </select>
 
             <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded mt-4">

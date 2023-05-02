@@ -5,11 +5,14 @@ import { getTodos, createTodo, todoSelector, updateTodo, deleteTodo } from "../r
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import ModalEditTodo from "./ModalEditTodo";
+import { ShowAlert, ShowConfirm, ShowWarningAlert } from "src/util/SwetAlert";
 
 interface TodoList {
     id: number;
     task: string;
-    status: string;
+    status: number;
+    created_at: string;
+    updated_at: string;
   }
 
 const ListTodo: React.FC = () => {
@@ -18,11 +21,11 @@ const ListTodo: React.FC = () => {
     const [isModalAddOpen, setIsModalAddOpen] = useState<boolean>(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState<boolean>(false);
     const [task, setTask] = useState<string>("");
-    const [status, setStatus] = useState<string>("");
+    const [status, setStatus] = useState<number>(0);
     const [taskEdit, setTaskEdit] = useState<string>("");
-    const [statusEdit, setStatusEdit] = useState<string>("");    
+    const [statusEdit, setStatusEdit] = useState<number>(0);    
     const [taskEditOld, setTaskEditOld] = useState<string>("");
-    const [statusEditOld, setStatusEditOld] = useState<string>("");
+    const [statusEditOld, setStatusEditOld] = useState<number>(0);
     const [id, setId] = useState<number>(0);
     const [alertAdd, setAlertAdd]= useState<boolean>(false);
     const [alertEdit, setAlertEdit]= useState<boolean>(false);
@@ -38,15 +41,18 @@ const ListTodo: React.FC = () => {
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        if(task == '' || status == ''){            
-            setAlertAdd(true);
+        if(task == '' || status == 0){            
+            // setAlertAdd(true);
+            ShowWarningAlert('Warning', 'Values not be empty')
             setIsModalAddOpen(true);
         }else{
             await dispatch(createTodo({ task, status }));
+            ShowAlert('Succes', 'Todo Created', 'success');
             setTask('');
-            setStatus('');
+            setStatus(0);
             setAlertAdd(false);
             setIsModalAddOpen(false);
+            dispatch(getTodos());
         }
     };
 
@@ -61,29 +67,35 @@ const ListTodo: React.FC = () => {
       
     const handleSaveEdit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        if(taskEdit == '' || statusEdit == ''){
+        if(taskEdit == '' || statusEdit == 0){
             setTaskEdit(taskEditOld);
             setStatusEdit(statusEditOld);
-            setAlertEdit(true);
+            // setAlertEdit(true);
+            ShowWarningAlert('Warning', 'Values not be empty')
             setIsModalEditOpen(true);
         }else{
             await dispatch(updateTodo({id, task : taskEdit, status: statusEdit}));
+            ShowAlert('Succes', 'Todo Updated', 'success');
             setTaskEdit('');
-            setStatusEdit('');
+            setStatusEdit(0);
             setAlertEdit(false)
             setIsModalEditOpen(false);
+            dispatch(getTodos());
         }
     };
 
-    const confirmDelete = (id: number):void=>{
-        if(window.confirm('Yakin mau hapus'))
-        dispatch(deleteTodo(id))
+    const confirmDelete =  async (id: number): Promise<void> =>{
+        const result = await ShowConfirm('Are you sure?', 'Do you really want to delete this?', 'Yes', 'No')
+        if (result.isConfirmed) {
+            dispatch(deleteTodo(id))
+        }
+        
     }
 
     useEffect(()=> {
         dispatch(getTodos());
     }, [dispatch])
-
+    // console.log(todo)
     return (
         <>
         <Navbar/>
@@ -106,7 +118,9 @@ const ListTodo: React.FC = () => {
                             <tr className="hover:bg-grey-lighter" key={index}>
                                 <td className="py-4 px-6 border-b border-grey-light">{index + 1}</td>
                                 <td className="py-4 px-6 border-b border-grey-light">{todo.task}</td>
-                                <td className="py-4 px-6 border-b border-grey-light">{todo.status}</td>
+                                <td className="py-4 px-6 border-b border-grey-light">
+                                    {todo.status === 1 ? 'Todo' : todo.status === 2 ? 'Progress' : 'Finish'}
+                                </td>
                                 <td className="py-4 px-6 border-b border-grey-light">
                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded me-1" onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleShowEdit(event, todo)}
 >

@@ -6,8 +6,8 @@ interface ModalEditProps {
   handleSaveEdit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   taskEdit: string;
   setTaskEdit: React.Dispatch<React.SetStateAction<string>>;
-  statusEdit: string;
-  setStatusEdit: React.Dispatch<React.SetStateAction<string>>;
+  statusEdit: number;
+  setStatusEdit: React.Dispatch<React.SetStateAction<number>>;
   alertEdit: boolean;
 }
 const ModalEditTodo: React.FC<ModalEditProps> = (props : ModalEditProps) => {
@@ -53,12 +53,12 @@ const ModalEditTodo: React.FC<ModalEditProps> = (props : ModalEditProps) => {
             <select
               id="newTodoPriority"
               value={statusEdit}
-              onChange={(e) => setStatusEdit(e.target.value)}
+              onChange={(e) => setStatusEdit(parseInt(e.target.value))}
               className="w-full p-2 border rounded"
             >
-              <option value="Todo">Todo</option>
-              <option value="Progress">Progress</option>
-              <option value="Finish">Finish</option>
+              <option value="1">Todo</option>
+              <option value="2">Progress</option>
+              <option value="3">Finish</option>
             </select>
 
             <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded mt-4">

@@ -10,16 +10,16 @@ export default function Navbar() {
             <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center justify-center h-16">
                 <div className="hidden md:block">
                     <div className="flex space-x-4">
-                        <a  className={`text-gray-300 hover:bg-gray-700 ${path ==="/" ? "bg-gray-700" : ""} hover:text-white px-3 py-2 rounded-md text-sm font-medium`}>
-                            <Link href="/">
-                                Todo List
-                            </Link> 
-                        </a>
-                        <a className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium`}>
-                            <Link href="/image">
-                                Image List
-                            </Link>
-                        </a>
+                        <Link href="/">
+                            <button  className={`text-gray-300 hover:bg-gray-700 ${path ==="/" ? "bg-gray-700" : ""} hover:text-white px-3 py-2 rounded-md text-sm font-medium`}>
+                                    Todo List
+                            </button>
+                        </Link> 
+                        <Link href="/image">
+                            <button className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium`}>
+                                    Image List
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
