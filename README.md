@@ -6,6 +6,9 @@ This is using [https://express-todo-typescript.vercel.app/todos](https://express
 
 this is TypeScript version, if you want javaScript version [visit this](https://github.com/kadarisman/next-todo-redux)
 
+## Demo
+[https://next-todo-redux-typescript.vercel.app/](https://next-todo-redux-typescript.vercel.app/)
+
 ## Getting Started
 
 ```bash
